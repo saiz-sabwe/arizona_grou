@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-h2=16zt3$3p#2o4zwm5-nqj9gw^3d0o34oi_7j&k3n3@g1kaf1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['arizona-drc.com', 'www.arizona-drc.com']
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['arizona-drc.com', 'www.arizona-drc.com']
 
 
 # Application definition
