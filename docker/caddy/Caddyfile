@@ -1,12 +1,7 @@
+http://arizona-drc.com {
+    redir https://arizona-drc.com{uri}
+}
+
 arizona-drc.com {
-    # (1) Reverse proxy vers votre application Django
     reverse_proxy django:8000
-    
-    # (2) (Optionnel) Autres directives (log, headers, etc.)
-    log {
-        output file /var/log/caddy/access.log
-    }
-    
-    # (3) (Optionnel) Redirection de HTTP vers HTTPS
-    # Avec cette config, Caddy redirige automatiquement HTTP vers HTTPS.
 }
