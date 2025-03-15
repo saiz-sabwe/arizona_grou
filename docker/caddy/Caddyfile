@@ -1,0 +1,7 @@
+http://arizona-drc.com {
+    redir https://arizona-drc.com{uri}
+}
+
+arizona-drc.com {
+    reverse_proxy django:8000
+}
