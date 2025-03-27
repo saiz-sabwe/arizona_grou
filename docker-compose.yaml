@@ -1,12 +1,14 @@
+version: '3.8'
+
 networks:
-  aziona_group_network:
+  web_network:
+    external: true
 
 services:
-  ############################# Django App ##############################
-  django:
+  django_arizona_group:
     build: .
-    container_name: aziona_group_app
-    image: aziona_group:latest
+    container_name: arizona_group_app
+    image: arizona_group_django:latest
     command: python3 manage.py runserver  0.0.0.0:8000 --insecure
     restart: always
     deploy:
@@ -14,38 +16,15 @@ services:
         condition: on-failure
         max_attempts: 3
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000" ]
       interval: 30s
       timeout: 10s
       retries: 3
     extra_hosts:
       - "host.docker.internal:host-gateway"
-
-    volumes:
-      - .:/aziona_group
-      - ./docker/aziona_group/ssl:/etc/ssl
     ports:
-      - "8000:8000"
-    networks:
-      - aziona_group_network
-
-    ########################### Caddy (Reverse Proxy) ############################
-  caddy:
-    image: caddy:latest
-    container_name: caddy_reverse_proxy_aziona_group
-    restart: unless-stopped
-    ports:
-      - "443:443"  # HTTPS
-      - "80:80"    # HTTP
+      - "8001:8000"
     volumes:
-      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
+      - .:/app
     networks:
-      - aziona_group_network
-    depends_on:
-      django:
-        condition: service_started
-volumes:
-  caddy_data: {}
-  caddy_config: {}
+      - web_network
